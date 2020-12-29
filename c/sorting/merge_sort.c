@@ -1,0 +1,108 @@
+//
+// Created by Vladimir-HP on 29/12/2020.
+//
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define MAX 10000
+#define MIN -10000
+
+// Fill array with random numbers from MIN to MAX
+void fillArray(int array[], int n) {
+    int i = 0;
+    do {
+        array[i] = rand() % (MAX - MIN + 1) + MIN;
+        i++;
+        n--;
+    } while (n > 0);
+}
+
+void printArray(int array[], int n) {
+    for (int i = 0; i < n; ++i)
+        printf(" %d", array[i]);
+
+    printf("\n\n");
+}
+
+// Perform merge of segments
+void merge(int array[], int left, int s, int right) {
+    int i, j, k;
+    int n1 = s - left + 1;
+    int n2 = right - s;
+
+    int arrayL[n1], arrayR[n2];
+
+    for (i = 0; i < n1; i++)
+        arrayL[i] = array[left + i];
+
+    for (j = 0; j < n2; j++)
+        arrayR[j] = array[s + j + 1];
+
+    i = 0;
+    j = 0;
+    k = left;
+    while (i < n1 && j < n2) {
+        if (arrayL[i] <= arrayR[j]) {
+            array[k] = arrayL[i];
+            i++;
+        } else {
+            array[k] = arrayR[j];
+            j++;
+        }
+        k++;
+    }
+    while (i < n1) {
+        array[k] = arrayL[i];
+        i++;
+        k++;
+    }
+    while (j < n2) {
+        array[k] = arrayR[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(int array[], int left, int right) {
+    if (left < right) {
+        int s = left + (right - left) / 2;
+
+        mergeSort(array, left, s);
+        mergeSort(array, s + 1, right);
+
+        merge(array, left, s, right);
+    }
+}
+
+
+
+int main() {
+    // Intializes random number generator
+    srand(time(NULL));
+
+    clock_t start, end;
+    int n;
+    printf("Number of elements in an array:");
+    scanf("%d", &n);
+
+    int array[n];
+    fillArray(array, n);
+    printf("Unsorted array:");
+    printArray(array, n);
+
+
+    start = clock();
+    mergeSort(array, 0, n);
+    end = clock();
+
+    double timeSpentInSec = (double) (end - start) / CLOCKS_PER_SEC;
+
+    printf("Sorted array:");
+    printArray(array, n);
+
+    printf("Running time %.20fs.\n", timeSpentInSec);
+    printf("Running time %.20fms.\n", timeSpentInSec * 1000.0);
+
+    return 0;
+}

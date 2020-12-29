@@ -1,0 +1,95 @@
+//
+// Created by Vladimir-HP on 29/12/2020.
+//
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define MAX 10000
+#define MIN -10000
+
+// Fill array with random numbers from MIN to MAX
+void fillArray(int array[], int n) {
+    int i = 0;
+    do {
+        array[i] = rand() % (MAX - MIN + 1) + MIN;
+        i++;
+        n--;
+    } while (n > 0);
+}
+
+void printArray(int array[], int n) {
+    for (int i = 0; i < n; ++i)
+        printf(" %d", array[i]);
+
+    printf("\n\n");
+}
+
+// Swap two numbers using pointer
+void swap(int *x, int *y) {
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+// Partition function which selects a pivot
+int partition(int array[], int lower, int upper) {
+    int pivot = array[upper];
+    int i = lower - 1, j;
+    for (j = lower; j < upper ; j++) {
+        if (array[j] <= pivot) {
+            i = i + 1;
+            swap(&array[i], &array[j]);
+        }
+    }
+    i = i + 1;
+    swap(&array[i], &array[upper]);
+    return i;
+}
+void quickSort(int array[], int lower, int upper) {
+    int pi;
+    if (lower < upper) {
+        /*
+        //Used to avoid O(n^2) worst case
+        int t = (rand() % ( upper - lower + 1) + lower);
+        swap(&array[t], &array[upper]);
+         */
+
+        pi = partition(array, lower, upper);
+        quickSort(array, lower, pi - 1);
+        quickSort(array, pi + 1, upper);
+    }
+}
+
+
+
+int main() {
+    // Intializes random number generator
+    srand(time(NULL));
+
+    clock_t start, end;
+    int n;
+    printf("Number of elements in an array:");
+    scanf("%d", &n);
+
+    int array[n];
+    fillArray(array, n);
+    printf("Unsorted array:");
+    printArray(array, n);
+
+
+    start = clock();
+    quickSort(array, 0, n);
+    end = clock();
+
+    double timeSpentInSec = (double) (end - start) / CLOCKS_PER_SEC;
+
+    printf("Sorted array:");
+    printArray(array, n);
+
+    printf("Running time %.20fs.\n", timeSpentInSec);
+    printf("Running time %.20fms.\n", timeSpentInSec * 1000.0);
+
+    return 0;
+}
+
