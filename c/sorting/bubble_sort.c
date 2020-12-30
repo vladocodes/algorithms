@@ -59,22 +59,23 @@ int main() {
 
     int array[n];
     fillArray(array, n);
-    printf("Unsorted array:");
+    printf("Unsorted array:\n");
     printArray(array, n);
 
-
+    // Calculate the time taken by algorithm
+    // Start measuring time
     start = clock();
     bubbleSort(array, n);
     end = clock();
+    // Stop measuring time and calculate the elapsed time
+    double elapsedTime = (double) (end - start) / CLOCKS_PER_SEC;
 
-    double timeSpentInSec = (double) (end - start) / CLOCKS_PER_SEC;
 
-    printf("Sorted array:");
+    printf("Sorted array:\n");
     printArray(array, n);
 
-    printf("Running time %.20fs.\n", timeSpentInSec);
-    printf("Running time %.20fms.\n", timeSpentInSec * 1000.0);
-
+    printf("Total time taken by CPU: %.20fs.\n", elapsedTime);              // time in seconds
+    printf("Total time taken by CPU: %.20fms.\n", elapsedTime * 1000.0);    // time in milliseconds
     return 0;
 }
 
