@@ -39,6 +39,19 @@ void insertionSort(int array[], int n) {
     }
 }
 
+void insertionSort2(int array[], int n) {
+    int x, j;
+    for (int i = 1; i < n; ++i) {
+        x = array[i];
+        j = i;
+        while (j > 0 && array[j - 1] > x) {
+            array[j] = array[j - 1];
+            j--;
+        }
+        array[j] = x;
+    }
+}
+
 
 
 int main() {
@@ -58,7 +71,7 @@ int main() {
     // Calculate the time taken by algorithm
     // Start measuring time
     start = clock();
-    insertionSort(array, n);
+    insertionSort2(array, n);
     end = clock();
     // Stop measuring time and calculate the elapsed time
     double elapsedTime = (double) (end - start) / CLOCKS_PER_SEC;
