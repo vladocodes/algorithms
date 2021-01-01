@@ -35,14 +35,14 @@ void swap(int *x, int *y) {
 // Partition function which selects a pivot
 int partition(int array[], int lower, int upper) {
     int pivot = array[upper];
-    int i = lower - 1, j;
-    for (j = lower; j < upper ; j++) {
-        if (array[j] <= pivot) {
-            i = i + 1;
+    int i = lower - 1;
+    for (int j = lower; j < upper ; j++) {
+        if (array[j] < pivot) {
+            i++;
             swap(&array[i], &array[j]);
         }
     }
-    i = i + 1;
+    i++;
     swap(&array[i], &array[upper]);
     return i;
 }
