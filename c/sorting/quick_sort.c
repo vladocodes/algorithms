@@ -49,12 +49,6 @@ int partition(int array[], int lower, int upper) {
 void quickSort(int array[], int lower, int upper) {
     int pi;
     if (lower < upper) {
-        /*
-        //Used to avoid O(n^2) worst case
-        int t = (rand() % ( upper - lower + 1) + lower);
-        swap(&array[t], &array[upper]);
-         */
-
         pi = partition(array, lower, upper);
         quickSort(array, lower, pi - 1);
         quickSort(array, pi + 1, upper);
