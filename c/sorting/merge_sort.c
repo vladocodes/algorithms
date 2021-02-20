@@ -26,10 +26,10 @@ void printArray(int array[], int n) {
 }
 
 // Perform merge of segments
-void merge(int array[], int left, int s, int right) {
+void merge(int array[], int left, int mid, int right) {
     int i, j, k;
-    int n1 = s - left + 1;
-    int n2 = right - s;
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
 
     int arrayL[n1], arrayR[n2];
 
@@ -37,7 +37,7 @@ void merge(int array[], int left, int s, int right) {
         arrayL[i] = array[left + i];
 
     for (j = 0; j < n2; j++)
-        arrayR[j] = array[s + j + 1];
+        arrayR[j] = array[mid + j + 1];
 
     i = 0;
     j = 0;
@@ -66,12 +66,12 @@ void merge(int array[], int left, int s, int right) {
 
 void mergeSort(int array[], int left, int right) {
     if (left < right) {
-        int s = left + (right - left) / 2;
+        int mid = left + (right - left) / 2;
 
-        mergeSort(array, left, s);
-        mergeSort(array, s + 1, right);
+        mergeSort(array, left, mid);
+        mergeSort(array, mid + 1, right);
 
-        merge(array, left, s, right);
+        merge(array, left, mid, right);
     }
 }
 
