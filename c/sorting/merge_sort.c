@@ -13,9 +13,9 @@ void fillArray(int array[], int n);
 
 void printArray(int array[], int n);
 
-void merge(int array[], int left, int mid, int right);
+void merge(int *array, int left, int mid, int right);
 
-void mergeSort(int array[], int left, int right);
+void mergeSort(int *array, int left, int right);
 
 
 int main() {
@@ -35,7 +35,7 @@ int main() {
     // Calculate the time taken by algorithm
     // Start measuring time
     start = clock();
-    mergeSort(array, 0, n);
+    mergeSort(array, 0, n - 1);
     end = clock();
     // Stop measuring time and calculate the elapsed time
     double elapsedTime = (double) (end - start) / CLOCKS_PER_SEC;
@@ -66,46 +66,54 @@ void printArray(int array[], int n) {
 
 
 // Perform merge of segments
-void merge(int array[], int left, int mid, int right) {
+void merge(int *array, int left, int mid, int right) {
     int i, j, k;
+    int *arr1, *arr2;
     int n1 = mid - left + 1;
     int n2 = right - mid;
 
-    int arrayL[n1], arrayR[n2];
+    arr1 = (int*)malloc(sizeof (int)*n1);
+    arr2 = (int*)malloc(sizeof (int)*n2);
 
     for (i = 0; i < n1; i++)
-        arrayL[i] = array[left + i];
+        arr1[i] = array[left + i];
 
     for (j = 0; j < n2; j++)
-        arrayR[j] = array[mid + j + 1];
+        arr2[j] = array[mid + j + 1];
 
     i = 0;
     j = 0;
     k = left;
+
     while (i < n1 && j < n2) {
-        if (arrayL[i] <= arrayR[j]) {
-            array[k] = arrayL[i];
+        if (arr1[i] <= arr2[j]) {
+            array[k] = arr1[i];
             i++;
         } else {
-            array[k] = arrayR[j];
+            array[k] = arr2[j];
             j++;
         }
         k++;
     }
+
     while (i < n1) {
-        array[k] = arrayL[i];
+        array[k] = arr1[i];
         i++;
         k++;
     }
+
     while (j < n2) {
-        array[k] = arrayR[j];
+        array[k] = arr2[j];
         j++;
         k++;
     }
+
+    free(arr1);
+    free(arr2);
 }
 
 
-void mergeSort(int array[], int left, int right) {
+void mergeSort(int *array, int left, int right) {
     if (left < right) {
         int mid = left + (right - left) / 2;
 
