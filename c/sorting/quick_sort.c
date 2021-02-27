@@ -5,56 +5,19 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define MAX 10000
-#define MIN -10000
+#define MAX 100
+#define MIN -100
 
-// Fill array with random numbers from MIN to MAX
-void fillArray(int array[], int n) {
-    int i = 0;
-    do {
-        array[i] = rand() % (MAX - MIN + 1) + MIN;
-        i++;
-        n--;
-    } while (n > 0);
-}
 
-void printArray(int array[], int n) {
-    for (int i = 0; i < n; ++i)
-        printf(" %d", array[i]);
+void fillArray(int array[], int n);
 
-    printf("\n\n");
-}
+void printArray(int array[], int n);
 
-// Swap two numbers using pointer
-void swap(int *x, int *y) {
-    int temp = *x;
-    *x = *y;
-    *y = temp;
-}
+void swap(int *x, int *y);
 
-// Partition function which selects a pivot
-int partition(int array[], int lower, int upper) {
-    int pivot = array[upper];
-    int i = lower - 1;
-    for (int j = lower; j < upper ; j++) {
-        if (array[j] < pivot) {
-            i++;
-            swap(&array[i], &array[j]);
-        }
-    }
-    i++;
-    swap(&array[i], &array[upper]);
-    return i;
-}
-void quickSort(int array[], int lower, int upper) {
-    int pi;
-    if (lower < upper) {
-        pi = partition(array, lower, upper);
-        quickSort(array, lower, pi - 1);
-        quickSort(array, pi + 1, upper);
-    }
-}
+int partition(int array[], int lower, int upper);
 
+void quickSort(int array[], int lower, int upper);
 
 
 int main() {
@@ -86,6 +49,52 @@ int main() {
     printf("Total time taken by CPU: %.20fs.\n", elapsedTime);              // time in seconds
     printf("Total time taken by CPU: %.20fms.\n", elapsedTime * 1000.0);    // time in milliseconds
 
-    return 0;
+    exit(EXIT_SUCCESS);
 }
 
+
+void fillArray(int array[], int n) {
+    for (int i = 0; i < n; ++i)
+        array[i] = rand() % (MAX - MIN + 1) + MIN;
+}
+
+
+void printArray(int array[], int n) {
+    for (int i = 0; i < n; ++i)
+        printf(" %d", array[i]);
+
+    printf("\n\n");
+}
+
+
+void swap(int *x, int *y) {
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+
+// Partition function which selects a pivot
+int partition(int array[], int lower, int upper) {
+    int pivot = array[upper];
+    int i = lower - 1;
+    for (int j = lower; j < upper ; j++) {
+        if (array[j] < pivot) {
+            i++;
+            swap(&array[i], &array[j]);
+        }
+    }
+    i++;
+    swap(&array[i], &array[upper]);
+    return i;
+}
+
+
+void quickSort(int array[], int lower, int upper) {
+    int pi;
+    if (lower < upper) {
+        pi = partition(array, lower, upper);
+        quickSort(array, lower, pi - 1);
+        quickSort(array, pi + 1, upper);
+    }
+}

@@ -5,44 +5,17 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define MAX 10000
-#define MIN -10000
+#define MAX 100
+#define MIN -100
 
-// Fill array with random numbers from MIN to MAX
-void fillArray(int array[], int n) {
-    int i = 0;
-    do {
-        array[i] = rand() % (MAX - MIN + 1) + MIN;
-        i++;
-        n--;
-    } while (n > 0);
-}
 
-void printArray(int array[], int n) {
-    for (int i = 0; i < n; ++i)
-        printf(" %d", array[i]);
+void fillArray(int array[], int n);
 
-    printf("\n\n");
-}
-// Swap two numbers using pointer
-void swap(int *x, int *y) {
-    int temp = *x;
-    *x = *y;
-    *y = temp;
-}
+void printArray(int array[], int n);
 
-void selectionSort(int array[], int n) {
-    int minIndex;
-    for (int i = 0; i < n - 1; ++i) {
-        minIndex = i;
-        for (int j = i + 1; j < n; ++j)
-            if (array[minIndex] > array[j])
-                minIndex = j;
+void swap(int *x, int *y);
 
-        swap(&array[minIndex], &array[i]);
-    }
-}
-
+void selectionSort(int array[], int n);
 
 
 int main() {
@@ -74,5 +47,39 @@ int main() {
     printf("Total time taken by CPU: %.20fs.\n", elapsedTime);              // time in seconds
     printf("Total time taken by CPU: %.20fms.\n", elapsedTime * 1000.0);    // time in milliseconds
 
-    return 0;
+    exit(EXIT_SUCCESS);
+}
+
+
+void fillArray(int array[], int n) {
+    for (int i = 0; i < n; ++i)
+        array[i] = rand() % (MAX - MIN + 1) + MIN;
+}
+
+
+void printArray(int array[], int n) {
+    for (int i = 0; i < n; ++i)
+        printf(" %d", array[i]);
+
+    printf("\n\n");
+}
+
+
+void swap(int *x, int *y) {
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+
+void selectionSort(int array[], int n) {
+    int minIndex;
+    for (int i = 0; i < n - 1; ++i) {
+        minIndex = i;
+        for (int j = i + 1; j < n; ++j)
+            if (array[minIndex] > array[j])
+                minIndex = j;
+
+        swap(&array[minIndex], &array[i]);
+    }
 }
